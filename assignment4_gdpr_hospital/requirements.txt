@@ -1,0 +1,9 @@
+streamlit==1.31.0
+pandas
+numpy
+matplotlib
+cryptography
+python-dateutil
+python-dotenv
+sqlalchemy
+werkzeug
