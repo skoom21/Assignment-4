@@ -18,6 +18,9 @@ import hashlib
 from typing import Optional, Dict, Tuple
 from datetime import datetime
 
+# Import logging helper to record authentication events
+from db_helpers import insert_log
+
 
 # Database path
 DB_PATH = "hospital.db"
@@ -60,29 +63,50 @@ def login_user(username: str, password: str) -> Tuple[bool, Optional[Dict]]:
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
-        
+
         # Hash the provided password
         password_hash = hash_password(password)
-        
+
         # Query user
         cursor.execute("""
             SELECT user_id, username, role
             FROM users
             WHERE username = ? AND password_hash = ?
         """, (username, password_hash))
-        
+
         result = cursor.fetchone()
-        conn.close()
-        
+
         if result:
             user_data = {
                 'user_id': result[0],
                 'username': result[1],
                 'role': result[2]
             }
+            # Log successful login
+            try:
+                insert_log(user_id=user_data['user_id'], role=user_data['role'],
+                           action='LOGIN', details=f'User logged in: {username}', conn=conn)
+                # If we used the existing connection for logging, commit the change
+                try:
+                    conn.commit()
+                except Exception:
+                    pass
+            except Exception:
+                # Non-fatal if logging fails
+                pass
+
+            conn.close()
             print(f"✓ Login successful: {username} ({user_data['role']})")
             return True, user_data
         else:
+            # Log failed login attempt (user_id unknown)
+            try:
+                insert_log(user_id=None, role='UNKNOWN',
+                           action='FAILED_LOGIN', details=f'Failed login attempt for: {username}')
+            except Exception:
+                pass
+
+            conn.close()
             print(f"✗ Login failed: Invalid credentials for {username}")
             return False, None
             
@@ -208,6 +232,18 @@ def logout_session(session_state):
     Args:
         session_state: Streamlit session state object
     """
+    # Log logout if user data exists
+    try:
+        if hasattr(session_state, 'user_data') and session_state.user_data:
+            user = session_state.user_data
+            try:
+                insert_log(user_id=user.get('user_id'), role=user.get('role'),
+                           action='LOGOUT', details=f"User logged out: {user.get('username')}")
+            except Exception:
+                pass
+    except Exception:
+        pass
+
     session_state.logged_in = False
     session_state.user_data = None
 

@@ -124,6 +124,12 @@ def update_patient(patient_id: int, name: str, age: int, gender: str,
         Tuple[bool, str]: (success, message)
     """
     try:
+        # Defensive: allow patient_id passed as str/float from UI
+        try:
+            patient_id = int(patient_id)
+        except Exception:
+            return False, f"Invalid patient_id type: {type(patient_id)}"
+
         conn = get_db_connection()
         cursor = conn.cursor()
         
@@ -225,9 +231,15 @@ def get_patient_by_id(patient_id: int) -> Optional[Dict]:
         Optional[Dict]: Patient data or None
     """
     try:
+        # Defensive: coerce patient_id to int if possible
+        try:
+            patient_id = int(patient_id)
+        except Exception:
+            return None
+
         conn = get_db_connection()
         cursor = conn.cursor()
-        
+
         cursor.execute("SELECT * FROM patients WHERE patient_id = ?", (patient_id,))
         result = cursor.fetchone()
         conn.close()
@@ -265,6 +277,12 @@ def anonymize_patient_row(patient_id: int, user_id: int, role: str) -> Tuple[boo
         Tuple[bool, str]: (success, message)
     """
     try:
+        # Defensive: coerce patient_id to int if passed from UI as str/float
+        try:
+            patient_id = int(patient_id)
+        except Exception:
+            return False, f"Invalid patient_id type: {type(patient_id)}"
+
         conn = get_db_connection()
         cursor = conn.cursor()
         
