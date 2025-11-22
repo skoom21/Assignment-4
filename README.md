@@ -307,46 +307,17 @@ python graphs.py
 ---
 
 ## 📸 Screenshots
-
 ### Login Page
-```
-🏥 Hospital Management System
-GDPR-Compliant Patient Management
 
-🔐 Login
-[Username: ________]
-[Password: ________]
-[Login Button]
-```
+![Login Page](Screenshots/login.png)
 
 ### Admin Dashboard
-```
-👨‍💼 Admin Dashboard
 
-📊 Dashboard Overview
-┌──────────────┬──────────────┬──────────────┬──────────────┐
-│ 👥 Active    │ 🔒 Anonymized│ 📜 Audit     │ 👤 System    │
-│ Patients: 5  │ Patients: 2  │ Logs: 47     │ Users: 5     │
-└──────────────┴──────────────┴──────────────┴──────────────┘
-
-🕐 Recent Activity
-[Timestamp]    [Role]    [Action]    [Details]
-...
-```
+![Admin Dashboard](Screenshots/admin_dashboard.png)
 
 ### Doctor Dashboard (Anonymized View)
-```
-👨‍⚕️ Doctor Dashboard
 
-🔒 Privacy Notice: Viewing anonymized patient data
-
-👥 Patient List (5 patients)
-┌────┬──────────┬─────┬────────┬─────────┬──────────────┐
-│ ID │ Name     │ Age │ Gender │ Contact │ Diagnosis    │
-├────┼──────────┼─────┼────────┼─────────┼──────────────┤
-│ 1  │ J*** S***│ 45  │ Male   │ +12**** │ 🔒 ENCRYPTED │
-└────┴──────────┴─────┴────────┴─────────┴──────────────┘
-```
+![Doctor Dashboard](Screenshots/doctor_dashboard.png)
 
 ---
 
@@ -394,20 +365,6 @@ GDPR-Compliant Patient Management
    - Implement regular backups
    - Secure file permissions on server
 
-### Production Deployment Checklist
-
-- [ ] Change all default passwords
-- [ ] Use secure key management (KMS)
-- [ ] Implement HTTPS/TLS
-- [ ] Add rate limiting
-- [ ] Enable database backups
-- [ ] Set up monitoring and alerts
-- [ ] Implement 2FA for admin accounts
-- [ ] Add input sanitization
-- [ ] Enable SQL injection protection
-- [ ] Implement session timeout
-- [ ] Add CAPTCHA for login
-- [ ] Set secure cookie flags
 
 ---
 
@@ -440,22 +397,6 @@ For issues or questions:
 ## 📄 License
 
 This project is for educational purposes demonstrating GDPR-compliant system design.
-
----
-
-## ✅ Completion Checklist
-
-- [x] Database schema implemented
-- [x] Encryption system working
-- [x] Authentication with RBAC
-- [x] Patient CRUD operations
-- [x] Anonymization feature
-- [x] Audit logging
-- [x] Data visualization
-- [x] CSV export functionality
-- [x] Complete documentation
-- [x] Testing procedures
-
 ---
 
 **🎉 System Ready for Use!**
