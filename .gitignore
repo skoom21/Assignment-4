@@ -1,0 +1,12 @@
+fernet.key
+hospital.db
+__pycache__/
+*.pyc
+.env
+.vscode/
+.ipynb_checkpoints/
+.DS_Store
+logs/
+coverage
+htmlcov/
+*.sqlite3
