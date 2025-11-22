@@ -40,7 +40,7 @@ def log_action(user_id: Optional[int], username: str, role: str, action: str, de
     conn.close()
 
 
-# Optional: Fernet utilities (bonus reversible encryption)
+# Optional: Fernet utilities 
 def generate_fernet_key() -> bytes:
     return Fernet.generate_key()
 
